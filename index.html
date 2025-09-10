@@ -66,26 +66,26 @@
       z-index:0;
     }
 
-    /* Botón fijo a 85vh */
+    /* Botón más grande y un poco más arriba */
     .cta{
       position:absolute;
       left:50%; transform:translateX(-50%);
-      top:65vh;
-      display:inline-flex; align-items:center; gap:.6rem;
-      padding:.9rem 1.2rem; border-radius:999px;
+      top:60vh;
+      display:inline-flex; align-items:center; gap:.8rem;
+      padding:1.2rem 1.8rem; border-radius:999px;
       background: linear-gradient(135deg,var(--btn-green),var(--btn-green-dark));
       color:#fff; text-decoration:none; font-weight:900;
-      font-size: clamp(1rem, 3.6vw, 1.1rem);
+      font-size: clamp(1.2rem, 4vw, 1.4rem);
       box-shadow: var(--shadow);
       transition: transform .15s ease, filter .15s ease;
       z-index:2;
     }
-    .cta:hover{ transform:translateX(-50%) scale(1.05); filter:saturate(1.05); }
-    .cta:active{ transform:translateX(-50%) scale(0.97); }
+    .cta:hover{ transform:translateX(-50%) scale(1.07); filter:saturate(1.1); }
+    .cta:active{ transform:translateX(-50%) scale(0.98); }
 
-    .wa-icon{ width:26px; height:26px; }
+    .wa-icon{ width:34px; height:34px; }
 
-    /* Sección inferior (10vh) con beneficios */
+    /* Sección inferior (10-15vh) con beneficios */
     .benefits{
       height:15vh;
       display:flex;
@@ -138,4 +138,3 @@
   </main>
 </body>
 </html>
-
