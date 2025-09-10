@@ -26,99 +26,115 @@
          src="https://www.facebook.com/tr?id=1158806286302822&ev=PageView&noscript=1"/>
   </noscript>
   <!-- End Meta Pixel Code -->
- <style>
+
+  <style>
     :root{
       --btn-green:#25D366;
       --btn-green-dark:#128C7E;
       --shadow:0 12px 40px rgba(0,0,0,.35);
-      --btn-bottom: 12vh;
     }
-    *{box-sizing:border-box}
+    *{box-sizing:border-box;margin:0;padding:0}
     html,body{
-      height:100%;margin:0;
+      height:100%;
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Arial;
       background:#000;color:#fff;
     }
 
-    /* Fondo con imagen */
-    body{
-      background: url("fondo.jpeg") center/cover no-repeat fixed;
-    }
-
+    /* Contenedor principal dividido en 90/10 */
     .stage{
-      position:relative;
-      min-height:100svh;
       display:flex;
       flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      padding:2rem 1rem;
-      text-align:center;
+      height:100vh;
+      overflow:hidden;
     }
 
-    /* Botón WhatsApp */
+    /* Sección superior con imagen */
+    .hero{
+      position:relative;
+      height:90vh;
+      background:url("fondo.jpeg") center/cover no-repeat;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    /* Capa oscura encima */
+    .hero::before{
+      content:"";
+      position:absolute; inset:0;
+      background:rgba(0,0,0,.55);
+      z-index:0;
+    }
+
+    /* Botón fijo a 85vh */
     .cta{
+      position:absolute;
+      left:50%; transform:translateX(-50%);
+      top:85vh;
       display:inline-flex; align-items:center; gap:.6rem;
-      margin-top:2rem;
       padding:.9rem 1.2rem; border-radius:999px;
       background: linear-gradient(135deg,var(--btn-green),var(--btn-green-dark));
       color:#fff; text-decoration:none; font-weight:900;
       font-size: clamp(1rem, 3.6vw, 1.1rem);
       box-shadow: var(--shadow);
       transition: transform .15s ease, filter .15s ease;
+      z-index:2;
     }
-    .cta:hover{ transform: scale(1.05); filter:saturate(1.05); }
-    .cta:active{ transform: scale(0.97); }
+    .cta:hover{ transform:translateX(-50%) scale(1.05); filter:saturate(1.05); }
+    .cta:active{ transform:translateX(-50%) scale(0.97); }
 
     .wa-icon{ width:26px; height:26px; }
 
-    /* Bloques de beneficios */
+    /* Sección inferior (10vh) con beneficios */
     .benefits{
-      margin-top:2rem;
-      display:grid;
-      gap:1.5rem;
-      max-width:400px;
-      width:100%;
+      height:10vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:1rem;
     }
     .benefit-box{
-      background: rgba(0,0,0,.7);
+      background: rgba(0,0,0,.75);
       border-radius:12px;
-      padding:1.5rem;
+      padding:1rem 1.5rem;
       box-shadow:0 6px 20px rgba(0,0,0,.4);
+      text-align:center;
     }
     .benefit-box h3{
       color:#ffd83b;
-      margin:0 0 .8rem;
-      font-size:1.4rem;
+      margin:0 0 .5rem;
+      font-size:1.2rem;
     }
-    .benefit-box p{ margin:.3rem 0; font-size:1.05rem; }
+    .benefit-box p{ margin:.2rem 0; font-size:1rem; }
   </style>
 </head>
 <body>
   <main class="stage">
 
-    <!-- Botón WhatsApp -->
-    <a
-      class="cta"
-      href="https://wa.me/543821450244?text=%C2%A1Buen4s!%20Me%20gust4r%C3%AD4%20cre4r%20un%20usu4rio.%20Mi%20nombre%20es%3A"
-      target="_blank" rel="noopener"
-      aria-label="Abrir WhatsApp para crear usuario"
-      onclick="fbq('trackCustom', 'WhatsAppClick')"
-    >
-      <img src="favicon-whatsapp.webp" alt="WhatsApp" class="wa-icon" />
-      ¡Creá tu usuario!
-    </a>
+    <!-- Sección con imagen -->
+    <section class="hero">
+      <!-- Botón WhatsApp -->
+      <a
+        class="cta"
+        href="https://wa.me/543821450244?text=%C2%A1Buen4s!%20Me%20gust4r%C3%AD4%20cre4r%20un%20usu4rio.%20Mi%20nombre%20es%3A"
+        target="_blank" rel="noopener"
+        aria-label="Abrir WhatsApp para crear usuario"
+        onclick="fbq('trackCustom', 'WhatsAppClick')"
+      >
+        <img src="favicon-whatsapp.webp" alt="WhatsApp" class="wa-icon" />
+        ¡Creá tu usuario!
+      </a>
+    </section>
 
-    <!-- Bloques de beneficios -->
-   
+    <!-- Sección con beneficios -->
+    <section class="benefits">
       <div class="benefit-box">
         <h3>Beneficios Exclusivos</h3>
         <p>Recibe bonos de bienvenida y promociones especiales.</p>
         <p>Mínimo de carga: $2000</p>
       </div>
-    </div>
+    </section>
 
   </main>
 </body>
-
 </html>
