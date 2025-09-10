@@ -31,9 +31,10 @@
       --btn-green:#25D366;
       --btn-green-dark:#128C7E;
       --shadow:0 12px 40px rgba(0,0,0,.35);
-      --overlay: rgba(0,0,0,.45); /* oscurecido para resaltar el botón */
-      --blur: 24px;               /* intensidad del difuminado del fondo */
-      --btn-top: 60vh;            /* posición vertical del botón (ajustable) */
+      --overlay: rgba(0,0,0,.45);
+      --blur: 24px;
+      --btn-top-desktop: 60vh; /* escritorio */
+      --btn-top-mobile: 78vh;  /* mobile */
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{
@@ -42,44 +43,40 @@
       background:#000;color:#fff;
     }
 
-    /* Layout 90 / 10 */
     .stage{ display:flex; flex-direction:column; height:100vh; overflow:hidden; }
 
-    /* HERO (90vh) */
     .hero{
       position:relative;
       height:90vh;
     }
 
-    /* Fondo difuminado a cover para rellenar laterales */
     .hero .bg{
       position:absolute; inset:0;
       background:url("fondo.jpeg") center/cover no-repeat;
       filter: blur(var(--blur)) brightness(.9);
-      transform: scale(1.06); /* evita bordes por el blur */
+      transform: scale(1.06);
       z-index:0;
     }
 
-    /* Capa oscura por encima */
     .hero .overlay{
       position:absolute; inset:0; background: var(--overlay); z-index:1;
     }
 
-    /* Imagen en primer plano SIN estirar (se respeta 1024x1280) */
     .hero .fg{
       position:absolute; inset:0;
       display:grid; place-items:center;
-      z-index:2; pointer-events:none; /* no tapa click del botón */
+      z-index:2; pointer-events:none;
     }
     .hero .fg img{
       height:90vh; width:auto; max-width:100%;
       object-fit:contain; pointer-events:none;
     }
 
-    /* Botón grande */
+    /* Botón */
     .cta{
-      position:absolute; left:50%; transform:translateX(-50%);
-      top: var(--btn-top);
+      position:absolute;
+      left:50%; transform:translateX(-50%);
+      top: var(--btn-top-desktop); /* por defecto escritorio */
       z-index:3;
 
       display:inline-flex; align-items:center; justify-content:center; gap:.8rem;
@@ -95,11 +92,18 @@
     .cta:active{ transform:translateX(-50%) scale(0.98); }
     .wa-icon{ width:34px; height:34px; }
 
-    /* BENEFICIOS (10vh) */
+    /* Mobile: botón más abajo */
+    @media (max-width: 767px){
+      .cta{ top: var(--btn-top-mobile); }
+    }
+
+    /* Beneficios arriba de todo (z-index mayor) */
     .benefits{
       height:10vh;
       display:flex; justify-content:center; align-items:center;
       padding:1rem;
+      position:relative;
+      z-index:4; /* asegura que quede por encima del fondo */
     }
     .benefit-box{
       background: rgba(0,0,0,.75);
@@ -111,17 +115,11 @@
     }
     .benefit-box h3{ color:#ffd83b; margin:0 0 .5rem; font-size:1.2rem; }
     .benefit-box p{ margin:.2rem 0; font-size:1rem; }
-
-    /* Ajustes finos en pantallas muy bajas */
-    @media (max-height: 620px){
-      :root{ --btn-top: 56vh; }
-    }
   </style>
 </head>
 <body>
   <main class="stage">
 
-    <!-- HERO con imagen centrada (sin estirar) + fondo difuminado -->
     <section class="hero" aria-label="Imagen destacada">
       <div class="bg" aria-hidden="true"></div>
       <div class="overlay" aria-hidden="true"></div>
@@ -130,7 +128,6 @@
         <img src="fondo.jpeg" alt="Imagen de portada">
       </div>
 
-      <!-- Botón WhatsApp -->
       <a
         class="cta"
         href="https://wa.me/543821450244?text=%C2%A1Buen4s!%20Me%20gust4r%C3%AD4%20cre4r%20un%20usu4rio.%20Mi%20nombre%20es%3A"
@@ -143,7 +140,6 @@
       </a>
     </section>
 
-    <!-- Beneficio (10vh) -->
     <section class="benefits">
       <div class="benefit-box">
         <h3>Beneficios Exclusivos</h3>
