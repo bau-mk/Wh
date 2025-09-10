@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ganemos.net</title>
 
-  <!-- Favicon -->
   <link rel="icon" type="image/webp" href="favicon-whatsapp.webp">
 
   <!-- Meta Pixel Code -->
@@ -32,6 +31,9 @@
       --btn-green:#25D366;
       --btn-green-dark:#128C7E;
       --shadow:0 12px 40px rgba(0,0,0,.35);
+      --overlay: rgba(0,0,0,.45); /* oscurecido para resaltar el botón */
+      --blur: 24px;               /* intensidad del difuminado del fondo */
+      --btn-top: 60vh;            /* posición vertical del botón (ajustable) */
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{
@@ -40,59 +42,63 @@
       background:#000;color:#fff;
     }
 
-    /* Contenedor principal dividido en 90/10 */
-    .stage{
-      display:flex;
-      flex-direction:column;
-      height:100vh;
-      overflow:hidden;
-    }
+    /* Layout 90 / 10 */
+    .stage{ display:flex; flex-direction:column; height:100vh; overflow:hidden; }
 
-    /* Sección superior con imagen */
+    /* HERO (90vh) */
     .hero{
       position:relative;
       height:90vh;
-      background:url("fondo.jpeg") center/cover no-repeat;
-      display:flex;
-      justify-content:center;
-      align-items:center;
     }
 
-    /* Capa oscura encima */
-    .hero::before{
-      content:"";
+    /* Fondo difuminado a cover para rellenar laterales */
+    .hero .bg{
       position:absolute; inset:0;
-      background:rgba(0,0,0,.55);
+      background:url("fondo.jpeg") center/cover no-repeat;
+      filter: blur(var(--blur)) brightness(.9);
+      transform: scale(1.06); /* evita bordes por el blur */
       z-index:0;
     }
 
-    /* Botón más grande y un poco más arriba */
+    /* Capa oscura por encima */
+    .hero .overlay{
+      position:absolute; inset:0; background: var(--overlay); z-index:1;
+    }
+
+    /* Imagen en primer plano SIN estirar (se respeta 1024x1280) */
+    .hero .fg{
+      position:absolute; inset:0;
+      display:grid; place-items:center;
+      z-index:2; pointer-events:none; /* no tapa click del botón */
+    }
+    .hero .fg img{
+      height:90vh; width:auto; max-width:100%;
+      object-fit:contain; pointer-events:none;
+    }
+
+    /* Botón grande */
     .cta{
-      position:absolute;
-      left:50%; transform:translateX(-50%);
-      top:60vh;
-      display:inline-flex; align-items:center; gap:.8rem;
+      position:absolute; left:50%; transform:translateX(-50%);
+      top: var(--btn-top);
+      z-index:3;
+
+      display:inline-flex; align-items:center; justify-content:center; gap:.8rem;
       padding:1.2rem 1.8rem; border-radius:999px;
+      width: clamp(240px, 80vw, 420px);
       background: linear-gradient(135deg,var(--btn-green),var(--btn-green-dark));
       color:#fff; text-decoration:none; font-weight:900;
-      font-size: clamp(1.2rem, 4vw, 1.4rem);
+      font-size: clamp(1.1rem, 3.8vw, 1.4rem);
       box-shadow: var(--shadow);
       transition: transform .15s ease, filter .15s ease;
-      z-index:2;
-      width: 80vw;
-      justify-content: center;
     }
-    .cta:hover{ transform:translateX(-50%) scale(1.07); filter:saturate(1.1); }
+    .cta:hover{ transform:translateX(-50%) scale(1.06); filter:saturate(1.08); }
     .cta:active{ transform:translateX(-50%) scale(0.98); }
-
     .wa-icon{ width:34px; height:34px; }
 
-    /* Sección inferior (10-15vh) con beneficios */
+    /* BENEFICIOS (10vh) */
     .benefits{
-      height:15vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
+      height:10vh;
+      display:flex; justify-content:center; align-items:center;
       padding:1rem;
     }
     .benefit-box{
@@ -101,20 +107,29 @@
       padding:1rem 1.5rem;
       box-shadow:0 6px 20px rgba(0,0,0,.4);
       text-align:center;
+      max-width:min(560px, 92vw);
     }
-    .benefit-box h3{
-      color:#ffd83b;
-      margin:0 0 .5rem;
-      font-size:1.2rem;
-    }
+    .benefit-box h3{ color:#ffd83b; margin:0 0 .5rem; font-size:1.2rem; }
     .benefit-box p{ margin:.2rem 0; font-size:1rem; }
+
+    /* Ajustes finos en pantallas muy bajas */
+    @media (max-height: 620px){
+      :root{ --btn-top: 56vh; }
+    }
   </style>
 </head>
 <body>
   <main class="stage">
 
-    <!-- Sección con imagen -->
-    <section class="hero">
+    <!-- HERO con imagen centrada (sin estirar) + fondo difuminado -->
+    <section class="hero" aria-label="Imagen destacada">
+      <div class="bg" aria-hidden="true"></div>
+      <div class="overlay" aria-hidden="true"></div>
+
+      <div class="fg">
+        <img src="fondo.jpeg" alt="Imagen de portada">
+      </div>
+
       <!-- Botón WhatsApp -->
       <a
         class="cta"
@@ -128,7 +143,7 @@
       </a>
     </section>
 
-    <!-- Sección con beneficios -->
+    <!-- Beneficio (10vh) -->
     <section class="benefits">
       <div class="benefit-box">
         <h3>Beneficios Exclusivos</h3>
@@ -140,4 +155,3 @@
   </main>
 </body>
 </html>
-
